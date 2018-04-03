@@ -2,7 +2,7 @@ class Student
   attr_accessor :id, :name, :grade
 
   def self.new_from_db(row)
-    student = self.new
+    student = self.new(row[0], row[1], row[2])
     student.id = row[0]
     student.name = row[1]
     student.grade = row[2]
@@ -38,6 +38,7 @@ class Student
     DB[:conn].execute(sql, grade=9).map do |row|
       self.new_from_db(row)
     end
+<<<<<<< HEAD
   end
 
   def self.students_below_12th_grade
@@ -54,6 +55,21 @@ class Student
 
   end
 
+=======
+  end
+
+  def self.students_below_12th_grade
+    sql = <<-SQL
+      SELECT * FROM students where grade < ?
+    SQL
+
+    DB[:conn].execute(sql, grade=12).map do |row|
+      self.new_from_db(row)
+    end
+
+  end
+
+>>>>>>> d79357f89c9b3b368d92fd74658ce41073c4b595
   def save
     sql = <<-SQL
       INSERT INTO students (name, grade)
